@@ -6,17 +6,17 @@
 /*   By: mmpofu <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/26 17:08:40 by mmpofu            #+#    #+#             */
-/*   Updated: 2017/09/26 17:19:28 by mmpofu           ###   ########.fr       */
+/*   Updated: 2017/09/27 18:21:40 by mmpofu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef		FDF_H
 # define	FDF_H
 
-typedef		struct	node
+typedef		struct	s_row_col
 {
-	char			*data;
-	struct node 	*next;
-}			t_list;
+	int			row;
+	int			col;
+}			t_row_col;
 
 #endif

@@ -1,27 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   populate_map.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmpofu <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/05/29 20:14:56 by mmpofu            #+#    #+#             */
-/*   Updated: 2017/09/27 17:52:16 by mmpofu           ###   ########.fr       */
+/*   Created: 2017/09/27 17:54:47 by mmpofu            #+#    #+#             */
+/*   Updated: 2017/09/27 18:21:36 by mmpofu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <>
 
-size_t	ft_strlen(const char *s)
+t_row_col	get_map_size()
 {
-	char	*str;
-	size_t	i;
+	int			fd;
+	char		*line;
+	t_row_col	rc;
 
-	str = (char *)s;
-	i = 0;
-	while (s[i] != '\0')
+	fd = open("test_maps/pyra.fdf", O_RDONLY);
+	while ((get_next_line(fd, &line)) > 0)
 	{
+		if (flag == 0)
+		{
+			while(*line)
+			{
+				if(!ft_isspace(*line))
+					cnt++;
+				line++;
+			}
+			flag = 1;
+		}
 		i++;
 	}
-	return (i);
+	i--;
+	rc.row = cnt;
+	rc.col = i;
+	return (rc);
 }
+
