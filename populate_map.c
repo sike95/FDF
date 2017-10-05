@@ -6,19 +6,23 @@
 /*   By: mmpofu <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/27 17:54:47 by mmpofu            #+#    #+#             */
-/*   Updated: 2017/09/27 18:21:36 by mmpofu           ###   ########.fr       */
+/*   Updated: 2017/10/05 18:28:29 by mmpofu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <>
+#include "fdf.h"
 
-t_row_col	get_map_size()
+int     populate_map(int fd, char *line)
 {
-	int			fd;
-	char		*line;
-	t_row_col	rc;
+	int     y;
+	int     i;
+	int     cnt;
+	int     flag;
+	char    **map;
 
-	fd = open("test_maps/pyra.fdf", O_RDONLY);
+	i = 0;
+	y = 0;
+	cnt = 0;
 	while ((get_next_line(fd, &line)) > 0)
 	{
 		if (flag == 0)
@@ -33,9 +37,13 @@ t_row_col	get_map_size()
 		}
 		i++;
 	}
+	printf("%d", cnt);
 	i--;
-	rc.row = cnt;
-	rc.col = i;
-	return (rc);
+	map = (char**)malloc(sizeof(char*) * (i + 1));
+	while (y < i)
+	{
+		map[y] = (char*)malloc(sizeof(char) * (cnt + 1));
+		y++;
+	}
+	return (0);
 }
-
