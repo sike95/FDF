@@ -6,7 +6,7 @@
 /*   By: mmpofu <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/25 16:24:28 by mmpofu            #+#    #+#             */
-/*   Updated: 2017/10/05 18:28:26 by mmpofu           ###   ########.fr       */
+/*   Updated: 2017/10/06 11:15:29 by mmpofu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,28 @@ int		main()
 	int		c;
 	//void	*mlx;
 	//void	*win;
-	int		cnt;
+	int		**map;
 	int		fd;
 	char	*line;
+	t_row_col *size;
 
-	populate_map(fd, line);
+	size = NULL;
+	fd = open("42.fdf", O_RDONLY);
+	allocate_map(fd, line, &(map));
+	printf("\n");
+//	populate_map(fd, line, &map);
+/*	i = 0;
+	while (i < 11)
+	{
+		x = 0;
+		while (x < 19)
+		{
+			printf("%d", map[i][x]);
+			x++;		
+		}
+		printf("\n");
+		i++;
+	}*/
 	//mlx = mlx_init();
 	//win = mlx_new_window(mlx, 400, 400, "mlx 420");
 

@@ -6,7 +6,7 @@
 /*   By: mmpofu <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/26 17:08:40 by mmpofu            #+#    #+#             */
-/*   Updated: 2017/10/05 18:18:24 by mmpofu           ###   ########.fr       */
+/*   Updated: 2017/10/06 11:16:13 by mmpofu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,14 @@
 #include "mlx.h"
 #include "fdf.h"
 
-int     populate_map(int fd, char  *line);
+typedef struct	s_row_col
+{
+	int			row;
+	int			col;
 
+}				t_row_col;
+
+void     populate_map(int fd, char *line, int ***map);
+int     allocate_map(int fd, char *line, int ***map);
+t_row_col      get_size(int fd, char *line);
 #endif
