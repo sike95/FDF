@@ -16,8 +16,19 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdio.h>
+# include <fcntl.h>
+# include <sys/types.h>
 # define BUFF_SIZE 30
 
+typedef struct	s_gnl
+{
+    char		buff[BUFF_SIZE + 1];
+    int			ret;
+    char		*temp;
+    char		*save;
+}				t_gnl;
+
+int				get_next_line(const int fd, char **line);
 void	*ft_memset(void *b, int c, size_t len);
 int		ft_strnequ(char const *s1, char const *s2, size_t n);
 int		ft_strequ(char const *s1, char const *s2);

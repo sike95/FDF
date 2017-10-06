@@ -3,83 +3,64 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dnematan <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mmpofu <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/11/17 16:16:18 by dnematan          #+#    #+#             */
-/*   Updated: 2016/11/17 16:16:45 by dnematan         ###   ########.fr       */
+/*   Created: 2017/06/19 20:35:45 by mmpofu            #+#    #+#             */
+/*   Updated: 2017/10/06 16:06:16 by mmpofu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	check_stock(char **stock, char **line)
+int		read_from_fd(t_gnl *var, int fd, char **line)
 {
-	char			*tmp;
-	static int		count;
-
-	if (*stock)
+	while ((var->ret = read(fd, var->buff, BUFF_SIZE)) > 0)
 	{
-		if ((tmp = ft_strchr(*stock, '\n')))
+		var->buff[var->ret] = '\0';
+		if (ft_strchr(var->buff, '\n'))
 		{
-			*tmp = '\0';
-			*line = ft_strdup(*stock);
-			free(*stock);
-			*stock = ft_strdup(tmp + 1);
-			tmp = NULL;
+			var->save = ft_strdup(ft_strchr(var->buff, '\n'));
+			var->temp = *line;
+			*line = ft_strjoin(var->temp, ft_strsub(var->buff, 0,
+						ft_strlen(var->buff) - ft_strlen(var->save)));
+			var->save++;
+			free(var->temp);
 			return (1);
 		}
+		var->temp = *line;
+		*line = ft_strjoin(var->temp, var->buff);
+		free(var->temp);
 	}
-	else if (count == 0)
-	{
-		*stock = (char *)malloc(sizeof(char) * (BUFF_SIZE + 1));
-		count = 1;
-	}
+	if (var->ret < 0)
+		return (var->ret);
+	if (**line)
+		return (1);
 	return (0);
 }
 
-static int	check_read(char **stock, char *str, char **line, int index)
+int		get_next_line(const int fd, char **line)
 {
-	char	*tmp;
+	static t_gnl var;
 
-	str[index] = '\0';
-	if ((tmp = strchr(str, '\n')))
-	{
-		*tmp = '\0';
-		*line = ft_strjoin(*stock, str);
-		free(*stock);
-		*stock = ft_strdup(tmp + 1);
-		tmp = NULL;
-		free(str);
-		return (1);
-	}
-	return (0);
-}
-
-int			get_next_line(const int fd, char **line)
-{
-	static char	*stock;
-	char		*str;
-	int			index;
-
-	if (check_stock(&stock, line))
-		return (1);
-	str = (char *)malloc(sizeof(char) * (BUFF_SIZE + 1));
-	while ((index = read(fd, str, BUFF_SIZE)) > 0)
-	{
-		if (check_read(&stock, str, line, index))
-			return (1);
-		stock = ft_strjoin(stock, str);
-	}
-	free(str);
-	str = NULL;
-	if (index == -1)
+	if (line == NULL)
 		return (-1);
-	if (stock != NULL)
+	*line = ft_strnew(0);
+	if (var.save)
 	{
-		*line = ft_strdup(stock);
-		free(stock);
-		stock = NULL;
-		return (1);
+		var.temp = *line;
+		*line = ft_strjoin(var.temp, var.save);
+		free(var.temp);
+		if (ft_strchr(*line, '\n'))
+		{
+			var.save = ft_strdup(ft_strchr(*line, '\n'));
+			var.temp = *line;
+			*line = ft_strsub(var.temp, 0, ft_strlen(var.temp)
+					- ft_strlen(var.save));
+			free(var.temp);
+			var.save++;
+			return (1);
+		}
+		var.save = NULL;
 	}
-	return (0);
+	return (read_from_fd(&var, fd, line));
 }
