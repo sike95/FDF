@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memccpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmpofu <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: dpillay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/05/29 20:15:24 by mmpofu            #+#    #+#             */
-/*   Updated: 2017/06/06 22:17:06 by mmpofu           ###   ########.fr       */
+/*   Created: 2017/05/30 07:14:06 by dpillay           #+#    #+#             */
+/*   Updated: 2017/06/09 09:23:44 by dpillay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,16 @@
 
 void	*ft_memccpy(void *dest, const void *src, int c, size_t n)
 {
-	size_t	i;
-	char	*strd;
-	char	*strs;
+	char	*psycho;
+	size_t	x;
 
-	i = 0;
-	strd = (char *)dest;
-	strs = (char *)src;
-	while (i < n)
+	x = -1;
+	psycho = dest;
+	while (++x < n)
 	{
-		strd[i] = strs[i];
-		if ((char)c == strd[i])
-			return (&strd[i + 1]);
-		i++;
+		*(psycho + x) = *((unsigned char *)src + x);
+		if (*((unsigned char *)src + x) == (unsigned char)c)
+			return (dest + x + 1);
 	}
 	return (NULL);
 }

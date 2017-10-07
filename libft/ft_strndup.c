@@ -1,24 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isprime.c                                       :+:      :+:    :+:   */
+/*   ft_strndup.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmpofu <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: dpillay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/08/24 12:08:57 by mmpofu            #+#    #+#             */
-/*   Updated: 2017/08/24 12:44:36 by mmpofu           ###   ########.fr       */
+/*   Created: 2017/06/09 07:56:50 by dpillay           #+#    #+#             */
+/*   Updated: 2017/06/09 08:00:49 by dpillay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int		ft_isprime(int n)
+char	*ft_strndup(const char *s1, size_t n)
 {
-	int		i;
+	char	*death;
 
-	i = 2;
-	while (i < n)
-		if (!(n % i++))
-			return (0);
-	return (1);
+	if (!(death = ft_strnew(n)))
+		return (NULL);
+	ft_strncpy(death, s1, n);
+	return (death);
 }

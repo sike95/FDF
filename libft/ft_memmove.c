@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmpofu <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: dpillay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/05/29 20:16:37 by mmpofu            #+#    #+#             */
-/*   Updated: 2017/07/24 07:41:54 by mmpofu           ###   ########.fr       */
+/*   Created: 2017/05/30 10:17:25 by dpillay           #+#    #+#             */
+/*   Updated: 2017/06/16 08:16:21 by dpillay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,28 @@
 
 void	*ft_memmove(void *dest, const void *src, size_t n)
 {
-	char	*tempd;
-	char	*temps;
+	const char	*srcc;
+	char		*dst;
 
-	tempd = (char *)dest;
-	temps = (char *)src;
-	if (dest > src)
+	srcc = src;
+	dst = dest;
+	if (dst <= srcc || srcc >= (dst + n))
 	{
-		while (n > 0)
+		while (n)
 		{
+			*dst++ = *srcc++;
 			n--;
-			tempd[n] = temps[n];
 		}
 	}
 	else
-		ft_memcpy(dest, src, n);
+	{
+		srcc = srcc + n - 1;
+		dst = dst + n - 1;
+		while (n)
+		{
+			*dst-- = *srcc--;
+			n--;
+		}
+	}
 	return (dest);
 }

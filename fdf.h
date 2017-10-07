@@ -6,7 +6,7 @@
 /*   By: mmpofu <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/26 17:08:40 by mmpofu            #+#    #+#             */
-/*   Updated: 2017/10/06 18:26:40 by mmpofu           ###   ########.fr       */
+/*   Updated: 2017/10/07 09:46:16 by mmpofu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ typedef struct	s_row_col
 
 }				t_row_col;
 
-int    **populate_map(int fd, char *line, int **map, t_row_col   size);
-int    **allocate_map(int fd, char *line, int **map, t_row_col   size);
-t_row_col      get_size(int fd, char *line);
+int    populate_map(int fd, int ***map, t_row_col   size);
+int    allocate_map(t_row_col   size, int ***map);
+t_row_col      get_size(int fd);
 #endif

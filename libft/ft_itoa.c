@@ -3,43 +3,43 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmpofu <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: dpillay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/08/02 14:43:17 by mmpofu            #+#    #+#             */
-/*   Updated: 2017/08/24 14:26:40 by mmpofu           ###   ########.fr       */
+/*   Created: 2017/06/01 16:42:22 by dpillay           #+#    #+#             */
+/*   Updated: 2017/06/09 14:12:54 by dpillay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static size_t	get_str_len(int n)
+static size_t	dstrlen(int n)
 {
-	size_t		i;
+	size_t		psycho;
 
-	i = 1;
+	psycho = 1;
 	while (n /= 10)
-		i++;
-	return (i);
+		psycho++;
+	return (psycho);
 }
 
 char			*ft_itoa(int n)
 {
 	char			*str;
-	size_t			str_len;
-	unsigned int	n_cpy;
+	size_t			len;
+	unsigned int	cpy;
 
-	str_len = get_str_len(n);
-	n_cpy = n;
+	len = dstrlen(n);
+	cpy = n;
 	if (n < 0)
 	{
-		n_cpy = -n;
-		str_len++;
+		cpy = -n;
+		len++;
 	}
-	if (!(str = ft_strnew(str_len)))
+	if (!(str = ft_strnew(len)))
 		return (NULL);
-	str[--str_len] = n_cpy % 10 + '0';
-	while (n_cpy /= 10)
-		str[--str_len] = n_cpy % 10 + '0';
+	str[--len] = cpy % 10 + '0';
+	while (cpy /= 10)
+		str[--len] = cpy % 10 + '0';
 	if (n < 0)
 		*(str + 0) = '-';
 	return (str);

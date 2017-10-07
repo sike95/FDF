@@ -6,61 +6,73 @@
 /*   By: mmpofu <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/19 20:35:45 by mmpofu            #+#    #+#             */
-/*   Updated: 2017/10/06 16:06:16 by mmpofu           ###   ########.fr       */
+/*   Updated: 2017/10/07 10:16:39 by mmpofu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int		read_from_fd(t_gnl *var, int fd, char **line)
+int		cbuf(char **str, char *buf, char **line)
 {
-	while ((var->ret = read(fd, var->buff, BUFF_SIZE)) > 0)
-	{
-		var->buff[var->ret] = '\0';
-		if (ft_strchr(var->buff, '\n'))
-		{
-			var->save = ft_strdup(ft_strchr(var->buff, '\n'));
-			var->temp = *line;
-			*line = ft_strjoin(var->temp, ft_strsub(var->buff, 0,
-						ft_strlen(var->buff) - ft_strlen(var->save)));
-			var->save++;
-			free(var->temp);
-			return (1);
-		}
-		var->temp = *line;
-		*line = ft_strjoin(var->temp, var->buff);
-		free(var->temp);
-	}
-	if (var->ret < 0)
-		return (var->ret);
-	if (**line)
-		return (1);
-	return (0);
+    if ((*str = ft_strchr(buf, '\n')) != NULL)
+    {
+        *str = ft_strsub(buf, ft_strlen(buf)
+                         - ft_strlen(*str), ft_strlen(*str)) + 1;
+        if (*line)
+            *line = ft_strjoin(*line, ft_strsub(buf, 0, ft_strlen(buf)
+                                                - ft_strlen(*str) - 1));
+        else
+            *line = ft_strdup(ft_strsub(buf, 0, ft_strlen(buf)
+                                        - ft_strlen(*str) - 1));
+        return (1);
+    }
+    if (*line)
+        *line = ft_strjoin(*line, buf);
+    else
+        *line = ft_strdup(buf);
+    return (0);
 }
 
-int		get_next_line(const int fd, char **line)
+char	*remain(char **line, char *str)
 {
-	static t_gnl var;
+    char	*tmp;
+    int		size;
+    
+    tmp = str;
+    if ((tmp = ft_strchr(str, '\n')) != NULL)
+    {
+        *tmp = '\0';
+        size = ft_strlen(str);
+        *tmp = '\n';
+        *line = ft_strsub(str, 0, size);
+        return (str + size);
+    }
+    *line = ft_strdup(str);
+    return (str + ft_strlen(str));
+}
 
-	if (line == NULL)
-		return (-1);
-	*line = ft_strnew(0);
-	if (var.save)
-	{
-		var.temp = *line;
-		*line = ft_strjoin(var.temp, var.save);
-		free(var.temp);
-		if (ft_strchr(*line, '\n'))
-		{
-			var.save = ft_strdup(ft_strchr(*line, '\n'));
-			var.temp = *line;
-			*line = ft_strsub(var.temp, 0, ft_strlen(var.temp)
-					- ft_strlen(var.save));
-			free(var.temp);
-			var.save++;
-			return (1);
-		}
-		var.save = NULL;
-	}
-	return (read_from_fd(&var, fd, line));
+int		get_next_line(int const fd, char **line)
+{
+    static char		*str;
+    int				ret;
+    char			buff[BUFF_SIZE + 1];
+    
+    if (str)
+    {
+        str = remain(line, str);
+        if (*str == '\n')
+        {
+            str++;
+            return (1);
+        }
+    }
+    if (fd == -1)
+        return (-1);
+    while ((ret = read(fd, buff, BUFF_SIZE)))
+    {
+        buff[ret] = '\0';
+        if ((cbuf(&str, buff, line)) == 1)
+            return (1);
+    }
+    return (0);
 }

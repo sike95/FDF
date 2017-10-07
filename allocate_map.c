@@ -6,19 +6,20 @@
 /*   By: mmpofu <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/06 09:30:02 by mmpofu            #+#    #+#             */
-/*   Updated: 2017/10/06 18:50:53 by mmpofu           ###   ########.fr       */
+/*   Updated: 2017/10/07 11:38:46 by mmpofu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-t_row_col		get_size(int fd, char *line)
+t_row_col		get_size(int fd)
 {
 	t_row_col  size;
 	int		flag;
 	int		i;
 	int		cnt;
 	char	**split;
+	char	*line;
 
 	i = 0;
 	cnt = 0;
@@ -33,54 +34,51 @@ t_row_col		get_size(int fd, char *line)
 			flag = 1;
 		}
 		i++;
-	//	free(line);
+		free(line);
 	}
+	free(line);
 	size.row = i;
 	size.col = cnt;
 	return (size);
 }
 
-int     **allocate_map(int fd, char *line, int **map, t_row_col   size)
+int     allocate_map(t_row_col   size, int ***temp_map)
 {
 	int     y;
-	int		**temp_map;
 	
-	temp_map = map;
 //	printf("row %d col %d", size.row, size.col);
 	y = 0;
-	(temp_map) = (int**)malloc(sizeof(int*) * (size.row));
+	(*temp_map) = (int**)malloc(sizeof(int*) * (size.row + 1));
 	while (y < size.row)
 	{
-		(temp_map)[y] = (int*)malloc(sizeof(int) * (size.col));
+		(*temp_map)[y] = (int*)malloc(sizeof(int) * (size.col + 1));
 		y++;
 	}
-	map = temp_map;
-	return (map);
+	return (1);
 }
 
-int		**populate_map(int fd, char *line, int **map, t_row_col   size)
+int		populate_map(int fd, int ***map, t_row_col   size)
 {
 	int			i;
 	int			j;
 	char		**split;
-	int     	**temp_map;
+	char		*line;
 
 	i = 0;
-	temp_map = map;
 	//printf("%d, %d \n", size.row, size.col);
-	while ((get_next_line(fd, &line)) > 0)
+	while ((get_next_line(fd, &line)) > 0 && i < size.row)
 	{
 		split = ft_strsplit(line, ' ');
 		j = 0;
 		while (j < size.col)
 		{
-			temp_map[i][j] = ft_atoi(split[j]);
+			(*map)[i][j] = ft_atoi(split[j]);
 			j++;
 		}
 	//		printf("\n");
 		i++;
 		free(line);
 	}
-	map = temp_map;
-	return (map);
+//	free(line);
+	return (1);
 }

@@ -1,24 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strpbrk.c                                       :+:      :+:    :+:   */
+/*   ft_isupper.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmpofu <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: dpillay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/08/24 11:53:18 by mmpofu            #+#    #+#             */
-/*   Updated: 2017/08/24 11:54:41 by mmpofu           ###   ########.fr       */
+/*   Created: 2017/06/09 08:36:43 by dpillay           #+#    #+#             */
+/*   Updated: 2017/06/09 08:38:31 by dpillay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strpbrk(const char *s1, const char *s2)
+int		ft_isupper(int c)
 {
-	while (*s1)
-	{
-		if (ft_strchr(s2, *s1))
-			return (char *)s1;
-		s1++;
-	}
-	return (NULL);
+	return (c <= 'Z' && c >= 'A');
 }

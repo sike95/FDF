@@ -6,7 +6,7 @@
 /*   By: mmpofu <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/25 16:24:28 by mmpofu            #+#    #+#             */
-/*   Updated: 2017/10/06 18:50:50 by mmpofu           ###   ########.fr       */
+/*   Updated: 2017/10/07 11:38:43 by mmpofu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,34 +35,33 @@ int		main()
 	void	*win;
 	int		**map;
 	int		fd;
-	char	*line;
 	t_row_col size;
-	i = 0;
-	j = 0;
+	
+   	x = 0;
+	y = 0;
 	fd = open("42.fdf", O_RDONLY);
-	size = get_size(fd, line);
-//	printf("%d, %d \n", size.row, size.col);
-	map = allocate_map(fd, line, map, size);
+	size = get_size(fd);
+	printf("%d, %d \n", size.row, size.col);
+	allocate_map(size, &map);
 	close(fd);
 	fd = open("42.fdf", O_RDONLY);
-//	mlx = mlx_init();
-//	win = mlx_new_window(mlx, 400, 400, "mlx 420");
-	map = populate_map(fd, line, map, size);
-
-	while (i < size.row )
+	mlx = mlx_init();
+	win = mlx_new_window(mlx, 400, 400, "mlx 420");
+	populate_map(fd, &map, size);
+	while (y < size.row )
 	{
-		j = 0;
-		while (j < size.col)
+		x = 0;
+		while (x < size.col)
 		{
-			printf("%d", map[i][j]);
-//			mlx_pixel_put(mlx, win, i, j, 0x00FFFFFF);
-			j++;
+			printf("%d", map[y][x]);
+			mlx_pixel_put(mlx, win, y + 200 , x + 200, 0x00FFFFFF);
+			x++;
 		}
 		printf("\n");
-		i++;
+		y++;
 	}
-//	mlx_pixel_put(mlx, win, x, y, 0x00FFFFFF);
-//	mlx_key_hook(win, my_key_funct, 0);
-//	mlx_loop(mlx);	
+	//mlx_pixel_put(mlx, win, x, y, 0x00FFFFFF);
+	mlx_key_hook(win, my_key_funct, 0);
+	mlx_loop(mlx);	
 	return (0);
 }

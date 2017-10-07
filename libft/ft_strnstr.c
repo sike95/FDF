@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmpofu <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: dpillay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/06/04 23:33:51 by mmpofu            #+#    #+#             */
-/*   Updated: 2017/06/09 15:29:36 by mmpofu           ###   ########.fr       */
+/*   Created: 2017/06/07 10:49:06 by dpillay           #+#    #+#             */
+/*   Updated: 2017/06/07 13:52:47 by dpillay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,28 +14,28 @@
 
 char	*ft_strnstr(const char *big, const char *little, size_t len)
 {
-	int		x;
-	size_t	y;
+	size_t		i;
+	size_t		j;
+	size_t		k;
+	int			found;
 
-	x = 0;
-	y = 0;
-	if (ft_strlen(little) == 0)
+	i = -1;
+	found = 1;
+	if (!ft_strlen(little))
 		return ((char *)big);
-	while (big[x] != '\0' && len > 0)
+	while (*(big + ++i) && i < len)
 	{
-		if (big[x] == little[y])
+		j = 0;
+		if (*(big + i) == *(little + 0))
 		{
-			y++;
-			if (little[y] == '\0')
-				break ;
+			k = i;
+			found = 1;
+			while (*(big + k) && *(little + j) && j < len && k < len)
+				if (*(big + k++) != *(little + j++))
+					found = 0;
+			if (found && !*(little + j))
+				return ((char *)big + i);
 		}
-		len--;
-		x++;
-	}
-	if (ft_strlen(little) == y)
-	{
-		y = x - (ft_strlen(little) - 1);
-		return ((char *)big + y);
 	}
 	return (NULL);
 }

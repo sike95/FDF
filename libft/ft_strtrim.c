@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmpofu <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: dpillay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/07/21 11:42:50 by mmpofu            #+#    #+#             */
-/*   Updated: 2017/08/02 18:07:00 by mmpofu           ###   ########.fr       */
+/*   Created: 2017/06/01 11:40:56 by dpillay           #+#    #+#             */
+/*   Updated: 2017/06/09 12:57:19 by dpillay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,27 @@
 
 char	*ft_strtrim(char const *s)
 {
-	int		i;
-	int		len;
+	int		c;
+	int		l;
 	char	*str;
 
 	if (s == NULL)
 		return (NULL);
-	len = ft_strlen(s);
-	while (s[len - 1] == ' ' || s[len - 1] == '\t' || s[len - 1] == '\n')
-		len--;
-	i = -1;
-	while (s[++i] == ' ' || s[i] == '\t' || s[i] == '\n')
-		len--;
-	if (len <= 0)
-		len = 0;
-	str = (char*)malloc(sizeof(char) * (len + 1));
+	l = ft_strlen(s);
+	while (s[l - 1] == ' ' || s[l - 1] == '\t' || s[l - 1] == '\n')
+		l--;
+	c = -1;
+	while (s[++c] == ' ' || s[c] == '\t' || s[c] == '\n')
+		l--;
+	if (l <= 0)
+		l = 0;
+	str = (char*)malloc(sizeof(char) * (l + 1));
 	if (str == NULL)
 		return (NULL);
-	s += i;
-	i = -1;
-	while (++i < len)
-		str[i] = *s++;
-	str[i] = '\0';
+	s += c;
+	c = -1;
+	while (++c < l)
+		str[c] = *s++;
+	str[c] = '\0';
 	return (str);
 }

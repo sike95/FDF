@@ -3,27 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strncat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmpofu <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: dpillay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/05/31 09:29:18 by mmpofu            #+#    #+#             */
-/*   Updated: 2017/06/07 00:20:03 by mmpofu           ###   ########.fr       */
+/*   Created: 2017/05/23 10:35:11 by dpillay           #+#    #+#             */
+/*   Updated: 2017/06/07 13:48:30 by dpillay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strncat(char *restrict s1, const char *restrict s2, size_t n)
+char	*ft_strncat(char *dest, const char *src, size_t p)
 {
-	int		i;
-	size_t	len;
+	char	*psycho;
 
-	i = 0;
-	len = ft_strlen(s1);
-	while (i < n && s2[i] != '\0')
+	psycho = dest;
+	while (*psycho != '\0')
 	{
-		s1[len + i] = s2[i];
-		i++;
+		psycho++;
 	}
-	s1[len + i] = '\0';
-	return (s1);
+	while (*src != '\0' && p > 0)
+	{
+		*psycho = *src;
+		psycho++;
+		src++;
+		p--;
+	}
+	*psycho = '\0';
+	return (dest);
 }
